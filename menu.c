@@ -6,11 +6,12 @@ int menu_widok(){
         printf("Centralny Rejestr Cybernetycznych Modyfikacji\n");
         printf("1. Zarejestruj nowy implant\n");
         printf("2. Wyswietl Rejestr\n");
-        printf("3. Modyfikuj implant\n");
+        printf("3. Edytuj implant\n");
         printf("4. Znajdz implanty\n");
         printf("5. Sortuj implanty\n");
         printf("6. Usun implant\n");
-        printf("7. Zapisz dane do pliku\n");
+        printf("7. Usun kilka implantow\n");
+        printf("8. Zapisz dane do pliku\n");
         printf("0. Zakoncz program\n");
         if(scanf("%d",&wybor)!=1){
             while(getchar()!='\n');

@@ -19,5 +19,6 @@ typedef struct implanty{
 
 void nowy_implant(implanty **head);
 void wyswietl_implanty(implanty *head);
+void edytuj_implant(implanty **head);
 
 #endif

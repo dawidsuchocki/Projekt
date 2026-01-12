@@ -19,12 +19,12 @@ int main(int argc, char *argv[]){
         {
         case 1:
             nowy_implant(&head);
-            continue;
+            break;
         case 2:
             wyswietl_implanty(head);
-            continue;
+            break;
         case 3:
-            /* code */
+            edytuj_implant(&head);
             break;
         case 4:
             /* code */
