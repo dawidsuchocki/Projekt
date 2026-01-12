@@ -5,23 +5,27 @@
 
 void nowy_implant(implanty **head){
     implanty *n = calloc(1,sizeof(implanty));
+    int nazwaistnieje = 0;
     if(n==NULL){
         printf("Blad alokacji pamieci\n");
         return;
     }
-    n->next = *head;
-    *head = n;
     int temp=-1;
     printf("Podaj nazwe implantu(nie uzywaj znaku ;):\n");
     while(1){
         fgets(n->nazwa,100,stdin);
+        n->nazwa[strcspn(n->nazwa, "\n")] = '\0';
         if(strchr(n->nazwa,';')!=NULL){
             printf("Nazwa nie moze zawierac znaku ;\n");
             continue;
         }else break;
     }
-    
-    n->nazwa[strcspn(n->nazwa, "\n")] = '\0';
+    for(implanty* p=*head; p != NULL; p = p->next){
+        if(strcmp(n->nazwa,p->nazwa)==0){
+            nazwaistnieje = 1;
+            break;
+        }
+    } 
     printf("Podaj producenta implantu(nie uzywaj znaku ;):\n");
     while(1){
         fgets(n->producent,100,stdin);
@@ -72,18 +76,31 @@ void nowy_implant(implanty **head){
         }else printf("Bledne dane\n");
     }
     temp = -1;
-    printf("Wprowadz ID wlasciciela implantu:\n");
+    int blad = 0;
     while(1){
+        blad=0;
+        printf("Wprowadz ID wlasciciela implantu:\n");
         if(scanf("%d",&temp)!=1){
             while(getchar()!='\n');
             printf("Bledne dane\n");
             continue;
         }
+        for(implanty* p=*head; p != NULL; p = p->next){
+            if((p->id_wlasciciela==temp)&&nazwaistnieje==1){
+                temp = -1;
+                printf("Ta osoba ma juz ten implant\n");
+                blad = 1;
+                break;
+            }
+        }
+        if(blad) continue;    
         if(temp>0){
             n->id_wlasciciela = temp;
             break;
         }
     }
+    n->next = *head;
+    *head = n;
     printf("Pomyslnie dodano implant\n");
 }
 

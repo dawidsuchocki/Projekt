@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "pliki.h"
 
 int WczytajPlik(implanty **head,char *sciezka){
@@ -20,6 +21,12 @@ int WczytajPlik(implanty **head,char *sciezka){
             free(n);
             break;
         }
+        for(implanty* p=*head; p != NULL; p = p->next){
+        if((strcmp(n->nazwa,p->nazwa)==0)&&n->id_wlasciciela==p->id_wlasciciela){
+            printf("Blad w wczytywaniu danych z pliku wejsciowego\n");
+            return 0;
+        }
+    } 
         if(wynik!=6){
             printf("Blad w wczytywaniu danych z pliku wejsciowego\n");
             fclose(plikwejscia);
@@ -35,6 +42,7 @@ int WczytajPlik(implanty **head,char *sciezka){
         n->next = *head;
         *head = n;
     }
+    printf("Pomyslnie wczytano dane z pliku\n");
     fclose(plikwejscia);
     return 1;
 }
