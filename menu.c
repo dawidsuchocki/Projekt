@@ -28,4 +28,4 @@ int menu_widok(){
     }
     while(getchar()!='\n');
     return wybor;
-} 
+}

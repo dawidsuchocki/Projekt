@@ -395,3 +395,61 @@ void znajdz_implanty(implanty *head){
             }else printf("Nie znaleziono zadnego implantu\n");
     }
 }
+
+void sortuj_implanty(implanty* head){
+    int wybor = 0,t=1;
+    implanty* tmp;
+    while(!(wybor>=1&&wybor<=2)){
+        printf("Wybierz opcję:\n");
+        printf("1. Sortuj po nazwie\n");
+        printf("2. Sortuj po id wlasciciela\n");
+        if(scanf("%d",&wybor)!=1){
+            while(getchar()!='\n');
+            printf("Bledne dane\n");
+            continue;
+        }
+    }
+    if(wybor==1){
+    }else{
+        while(t){
+            t=0;
+            tmp = head;
+            for(implanty* p=head->next;p!=NULL;p = p->next){
+                if(p->id_wlasciciela<=tmp->id_wlasciciela){
+                    zamiana(p,tmp);
+                    t=1;
+                }
+                tmp = tmp->next;
+            }
+        }
+    }
+}
+
+void zamiana(implanty *a, implanty* b){
+    char nazwa[101];
+    strcpy(nazwa, a->nazwa);
+    strcpy(a->nazwa, b->nazwa);
+    strcpy(b->nazwa, nazwa);
+
+    char producent[101];
+    strcpy(producent, a->producent);
+    strcpy(a->producent, b->producent);
+    strcpy(b->producent, producent);
+
+    int ryzyko = a->poziom_ryzyka;
+    a->poziom_ryzyka = b->poziom_ryzyka;
+    b->poziom_ryzyka = ryzyko;
+
+    double tmp = a->zapotrzebowanie_energetyczne;
+    a->zapotrzebowanie_energetyczne = b->zapotrzebowanie_energetyczne;
+    b->zapotrzebowanie_energetyczne = tmp;
+
+    enum Legalnosc tmp2 = a->legalnosc;
+    a->legalnosc = b->legalnosc;
+    b->legalnosc = tmp2;
+
+    int id = a->id_wlasciciela;
+    a->id_wlasciciela = b->id_wlasciciela;
+    b->id_wlasciciela = id;
+
+}

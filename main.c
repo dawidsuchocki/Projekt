@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
             znajdz_implanty(head);
             break;
         case 6:
-            /* code */
+            sortuj_implanty(head);
             break;
         case 7:
             /* code */
