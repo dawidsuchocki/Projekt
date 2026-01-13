@@ -400,7 +400,7 @@ void sortuj_implanty(implanty* head){
     int wybor = 0,t=1;
     implanty* tmp;
     while(!(wybor>=1&&wybor<=2)){
-        printf("Wybierz opcję:\n");
+        printf("Wybierz opcje:\n");
         printf("1. Sortuj po nazwie\n");
         printf("2. Sortuj po id wlasciciela\n");
         if(scanf("%d",&wybor)!=1){
@@ -410,6 +410,17 @@ void sortuj_implanty(implanty* head){
         }
     }
     if(wybor==1){
+        while(t){
+            t=0;
+            tmp = head;
+            for(implanty* p=head->next;p!=NULL;p = p->next){
+                if(strcmp(tmp->nazwa,p->nazwa)>0){
+                    zamiana(p,tmp);
+                    t=1;
+                }
+                tmp = tmp->next;
+            }
+        }
     }else{
         while(t){
             t=0;
@@ -452,4 +463,97 @@ void zamiana(implanty *a, implanty* b){
     a->id_wlasciciela = b->id_wlasciciela;
     b->id_wlasciciela = id;
 
+}
+
+void usun_implant(implanty **head){
+    int id,s=0;
+    while(1){
+        printf("Wprowadz id wlasciciela implantu\n");
+        if(scanf("%d",&id)!=1){
+            while(getchar()!='\n');
+            continue;
+        }
+        if(id>0){
+            break;
+        }
+    }
+    while(getchar()!='\n');
+    char nazwa[101];
+    while(1){
+        printf("Wprowadz nazwe implantu\n");
+        fgets(nazwa,101,stdin);
+        nazwa[strcspn(nazwa, "\n")] = '\0';
+        if(strchr(nazwa,';')!=NULL){
+            printf("Nazwa nie moze zawierac znaku ;\n");
+            continue;
+        }else break;
+    }
+    implanty *tmp = NULL;
+    implanty *n = *head;
+    while (n != NULL) {
+        if (n->id_wlasciciela == id && strcmp(n->nazwa, nazwa) == 0) {
+            if (n->legalnosc == 2) {
+                printf("Nie mozna usunac tego implantu\n");
+                return;
+            }
+            break;
+        }
+        tmp = n;
+        n = n->next;
+    }
+    if(n==NULL){
+        printf("Nie znaleziono implantu o podanej nazwie i id wlasciciela\n");
+        return;
+    }else if(s){
+        printf("Nie mozna usunac tego implantu\n");
+        return;
+    }
+    if(tmp == NULL){
+        *head = n->next;
+    }else{
+        tmp->next = n->next;
+    }
+    printf("Pomyslnie usunieto implant\n");
+    free(n);
+}
+
+void usuwanie_implantow(implanty** head){
+    int id,ilosc=0;
+    while(1){
+        printf("Wprowadz id wlasciciela implantu\n");
+        if(scanf("%d",&id)!=1){
+            while(getchar()!='\n');
+            continue;
+        }
+        if(id>0){
+            break;
+        }
+    }
+    while(getchar()!='\n');
+    implanty *tmp = NULL;
+    implanty *n = *head;
+    while(n!=NULL){
+        if(n->id_wlasciciela==id){
+            if(n->legalnosc==2){
+                tmp=n;
+                n=n->next;
+            }else{
+                ilosc++;
+                implanty* p = n->next;
+                if(tmp == NULL){
+                    *head = n->next;
+                }else{
+                    tmp->next = n->next;
+                }
+                free(n);
+                n = p;
+            }
+        }else{
+            tmp=n;
+            n=n->next;
+        }
+    }  
+    if(ilosc){
+        printf("Usunieto %d rejestrow\n",ilosc);
+    }else printf("Nie usunieto zadnych rekordow\n");
 }

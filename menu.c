@@ -11,7 +11,7 @@ int menu_widok(){
         printf("5. Znajdz kilka implantow\n");
         printf("6. Sortuj implanty\n");
         printf("7. Usun implant\n");
-        printf("8. Usun kilka implantow\n");
+        printf("8. Usun implanty danego wlasciciela\n");
         printf("9. Zapisz dane do pliku\n");
         printf("0. Zakoncz program\n");
         if(scanf("%d",&wybor)!=1){

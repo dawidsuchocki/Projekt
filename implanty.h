@@ -24,5 +24,7 @@ void znajdz_implant(implanty *head);
 void znajdz_implanty(implanty *head);
 void sortuj_implanty(implanty *head);
 void zamiana(implanty *a, implanty* b);
+void usun_implant(implanty **head);
+void usuwanie_implantow(implanty** head);
 
 #endif

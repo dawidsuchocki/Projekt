@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]){
     if(argc<3){
-        printf("Prawidłowa składnia przy odpalaniu programu to:\nProgram.exe <sciezka_do_pliku_wejscia> <sciezka_do_pliku_wyjscia>");
+        printf("Prawidlowa skladnia przy odpalaniu programu to:\nProgram.exe <sciezka_do_pliku_wejscia> <sciezka_do_pliku_wyjscia>");
         return 0;
     }
     char *wejscie = argv[1];
@@ -36,10 +36,10 @@ int main(int argc, char *argv[]){
             sortuj_implanty(head);
             break;
         case 7:
-            /* code */
+            usun_implant(&head);
             break;
         case 8:
-            /* code */
+            usuwanie_implantow(&head);
             break;
         case 9:
             printf("%s\n", wyjscie);
