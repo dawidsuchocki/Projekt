@@ -123,7 +123,7 @@ void wyswietl_implanty(implanty *head){
     }
 }
 
-void edytuj_implant(implanty **head){
+void edytuj_implant(implanty *head){
     int id;
     while(1){
         printf("Wprowadz id wlasciciela implantu\n");
@@ -138,7 +138,7 @@ void edytuj_implant(implanty **head){
     while(getchar()!='\n');
     char nazwa[101];
     while(1){
-        printf("Wprowadz nazwe implantu");
+        printf("Wprowadz nazwe implantu\n");
         fgets(nazwa,101,stdin);
         nazwa[strcspn(nazwa, "\n")] = '\0';
         if(strchr(nazwa,';')!=NULL){
@@ -146,21 +146,21 @@ void edytuj_implant(implanty **head){
             continue;
         }else break;
     }
-    implanty* n;
-    for(implanty* p=*head;p!=NULL;p = p->next){
+    implanty* n=NULL;
+    for(implanty* p=head;p!=NULL;p = p->next){
         if(p->id_wlasciciela==id&&strcmp(nazwa,p->nazwa)==0){
             n=p;
             break;
         }
     }
     if(n==NULL){
-        printf("Nie znaleziono immplantu o podanej nazwie i id wlasciciela\n");
+        printf("Nie znaleziono implantu o podanej nazwie i id wlasciciela\n");
         return;
     }
     int wybor,temp;
     while(1)
     {
-        printf("Wybierz ktore pole chcesz edytować\n");
+        printf("Wybierz ktore pole chcesz edytowac\n");
         printf("1. Nazwe producenta\n");
         printf("2. Poziom ryzyka\n");
         printf("3. Zapotrzebowanie energetyczne\n");
@@ -214,5 +214,184 @@ void edytuj_implant(implanty **head){
             }else printf("Bledne dane\n");
         }
         break;
+    }
+}
+
+void znajdz_implant(implanty* head){
+    int id;
+    while(1){
+        printf("Wprowadz id wlasciciela implantu\n");
+        if(scanf("%d",&id)!=1){
+            while(getchar()!='\n');
+            continue;
+        }
+        if(id>0){
+            break;
+        }
+    }
+    while(getchar()!='\n');
+    char nazwa[101];
+    while(1){
+        printf("Wprowadz nazwe implantu\n");
+        fgets(nazwa,101,stdin);
+        nazwa[strcspn(nazwa, "\n")] = '\0';
+        if(strchr(nazwa,';')!=NULL){
+            printf("Nazwa nie moze zawierac znaku ;\n");
+            continue;
+        }else break;
+    }
+    implanty* n=NULL;
+    for(implanty* p=head;p!=NULL;p = p->next){
+        if((p->id_wlasciciela==id)&&(strcmp(nazwa,p->nazwa)==0)){
+            n=p;
+            break;
+        }
+    }
+    if(n==NULL){
+        printf("Nie znaleziono implantu o podanej nazwie i id wlasciciela\n");
+        return;
+    }
+    printf("%40s","Nazwa");
+    printf("%40s","Producent");
+    printf("%10s","Ryzyko");
+    printf("%25s","Zapotrzebowanie(kWh)");
+    printf("%15s","Legalnosc");
+    printf("%20s","ID wlasciciela\n");
+    printf("%40s",n->nazwa);
+    printf("%40s",n->producent);
+    printf("%10d",n->poziom_ryzyka);
+    printf("%25.2f",n->zapotrzebowanie_energetyczne);
+    printf("%15s",n->legalnosc ? (n->legalnosc == 1 ? "Szara strefa" : "Nielegalny") : "Legalny");
+    printf("%20d\n",n->id_wlasciciela);
+}
+
+void znajdz_implanty(implanty *head){
+    int wybor=0,ilosc=0,ryzyko=-1;
+    char nazwa[101];
+    while(!(wybor>=1&&wybor<=2)){
+        printf("Po jakiej wartosci chcesz szukac implantow:\n");
+        printf("1. Nazwa\n");
+        printf("2. Poziom ryzyka\n");
+        if(scanf("%d",&wybor)!=1){
+            while(getchar()!='\n');
+            printf("Bledny wybor\n");
+            continue;
+        }
+    }
+    switch(wybor){
+        case 1:
+            wybor=0;
+            while(!(wybor>=1&&wybor<=2)){
+                printf("Wybierz opcje:\n");
+                printf("1. Dokladnie taka sama nazwa\n");
+                printf("2. Prefix\n");
+                if(scanf("%d",&wybor)!=1){
+                    while(getchar()!='\n');
+                    printf("Bledny wybor\n");
+                    continue;
+                }
+            }
+            while(getchar()!='\n');
+            if(wybor==1){
+                while(1){
+                    printf("Wprowadz nazwe implantu\n");
+                    fgets(nazwa,101,stdin);
+                    nazwa[strcspn(nazwa, "\n")] = '\0';
+                    if(strchr(nazwa,';')!=NULL){
+                        printf("Nazwa nie moze zawierac znaku ;\n");
+                        continue;
+                    }else break;
+                }
+                for(implanty* p=head;p!=NULL;p = p->next){
+                    if(strcmp(nazwa,p->nazwa)==0){
+                        ilosc++;
+                    }
+                }
+                if(ilosc){
+                    printf("%40s","Nazwa");
+                    printf("%40s","Producent");
+                    printf("%10s","Ryzyko");
+                    printf("%25s","Zapotrzebowanie(kWh)");
+                    printf("%15s","Legalnosc");
+                    printf("%20s","ID wlasciciela\n");
+                    for(implanty* p=head;p!=NULL;p = p->next){
+                        if(strcmp(nazwa,p->nazwa)==0){
+                            printf("%40s",p->nazwa);
+                            printf("%40s",p->producent);
+                            printf("%10d",p->poziom_ryzyka);
+                            printf("%25.2f",p->zapotrzebowanie_energetyczne);
+                            printf("%15s",p->legalnosc ? (p->legalnosc == 1 ? "Szara strefa" : "Nielegalny") : "Legalny");
+                            printf("%20d\n",p->id_wlasciciela);
+                        }
+                    }
+                }else printf("Nie znaleziono zadnego implantu\n");
+            }else{
+                while(1){
+                    printf("Wprowadz prefix\n");
+                    fgets(nazwa,101,stdin);
+                    nazwa[strcspn(nazwa, "\n")] = '\0';
+                    if(strchr(nazwa,';')!=NULL){
+                        printf("Prefix nie moze zawierac znaku ;\n");
+                        continue;
+                    }else break;
+                }
+                for(implanty* p=head;p!=NULL;p = p->next){
+                    if(strncmp(p->nazwa,nazwa,strlen(nazwa))==0){
+                        ilosc++;
+                    }
+                }
+                if(ilosc){
+                    printf("%40s","Nazwa");
+                    printf("%40s","Producent");
+                    printf("%10s","Ryzyko");
+                    printf("%25s","Zapotrzebowanie(kWh)");
+                    printf("%15s","Legalnosc");
+                    printf("%20s","ID wlasciciela\n");
+                    for(implanty* p=head;p!=NULL;p = p->next){
+                        if(strncmp(p->nazwa,nazwa,strlen(nazwa))==0){
+                            printf("%40s",p->nazwa);
+                            printf("%40s",p->producent);
+                            printf("%10d",p->poziom_ryzyka);
+                            printf("%25.2f",p->zapotrzebowanie_energetyczne);
+                            printf("%15s",p->legalnosc ? (p->legalnosc == 1 ? "Szara strefa" : "Nielegalny") : "Legalny");
+                            printf("%20d\n",p->id_wlasciciela);
+                        }
+                    }
+                }else printf("Nie znaleziono zadnego implantu\n");
+            }
+            break;
+        case 2:
+            while(getchar()!='\n');
+            while(!(ryzyko>=0 && ryzyko<=10)){
+                printf("Podaj poziom ryzyka implantu (0-10):\n");
+                if(scanf("%d",&ryzyko)!=1){
+                    while(getchar()!='\n');
+                    printf("Bledne dane\n");
+                    continue;
+                }
+            }
+            for(implanty* p=head;p!=NULL;p = p->next){
+                if(p->poziom_ryzyka==ryzyko){
+                    ilosc++;
+                }
+            }
+            if(ilosc){
+                printf("%40s","Nazwa");
+                printf("%40s","Producent");
+                printf("%10s","Ryzyko");
+                printf("%25s","Zapotrzebowanie(kWh)");
+                printf("%15s","Legalnosc");
+                printf("%20s","ID wlasciciela\n");
+                for(implanty* p=head;p!=NULL;p = p->next){
+                    if(p->poziom_ryzyka==ryzyko){
+                        printf("%40s",p->nazwa);
+                        printf("%40s",p->producent);
+                        printf("%10d",p->poziom_ryzyka);
+                        printf("%25.2f",p->zapotrzebowanie_energetyczne);
+                        printf("%15s",p->legalnosc ? (p->legalnosc == 1 ? "Szara strefa" : "Nielegalny") : "Legalny");
+                        printf("%20d\n",p->id_wlasciciela);
+                    }
+                }
+            }else printf("Nie znaleziono zadnego implantu\n");
     }
 }

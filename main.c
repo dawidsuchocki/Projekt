@@ -24,18 +24,24 @@ int main(int argc, char *argv[]){
             wyswietl_implanty(head);
             break;
         case 3:
-            edytuj_implant(&head);
+            edytuj_implant(head);
             break;
         case 4:
-            /* code */
+            znajdz_implant(head);
             break;
         case 5:
-            /* code */
+            znajdz_implanty(head);
             break;
         case 6:
             /* code */
             break;
         case 7:
+            /* code */
+            break;
+        case 8:
+            /* code */
+            break;
+        case 9:
             printf("%s\n", wyjscie);
             ZapiszPlik(head, wyjscie);
             break;
