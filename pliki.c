@@ -49,6 +49,9 @@ int WczytajPlik(implanty **head,char *sciezka){
 
 void ZapiszPlik(implanty* head,char *sciezka){
     implanty* p = head;
+    if(p==NULL){
+        printf("Brak rekordow do zapisania\n");
+    }
     FILE *plikwyjscia = fopen(sciezka,"w");
     if(plikwyjscia == NULL){
         printf("Blad przy otwieraniu pliku\n");

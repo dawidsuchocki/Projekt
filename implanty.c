@@ -106,20 +106,24 @@ void nowy_implant(implanty **head){
 
 void wyswietl_implanty(implanty *head){
     implanty *p = head;
-    printf("%40s","Nazwa");
-    printf("%40s","Producent");
-    printf("%10s","Ryzyko");
-    printf("%25s","Zapotrzebowanie(kWh)");
-    printf("%15s","Legalnosc");
-    printf("%20s","ID wlasciciela\n");
-    while(p!=NULL){
-        printf("%40s",p->nazwa);
-        printf("%40s",p->producent);
-        printf("%10d",p->poziom_ryzyka);
-        printf("%25.2f",p->zapotrzebowanie_energetyczne);
-        printf("%15s",p->legalnosc ? (p->legalnosc == 1 ? "Szara strefa" : "Nielegalny") : "Legalny");
-        printf("%20d\n",p->id_wlasciciela);
-        p = p->next;
+    if(p==NULL){
+        printf("Brak rekordow do wyswietlenia\n");
+    }else{
+        printf("%40s","Nazwa");
+        printf("%40s","Producent");
+        printf("%10s","Ryzyko");
+        printf("%25s","Zapotrzebowanie(kWh)");
+        printf("%15s","Legalnosc");
+        printf("%20s","ID wlasciciela\n");
+        while(p!=NULL){
+            printf("%40s",p->nazwa);
+            printf("%40s",p->producent);
+            printf("%10d",p->poziom_ryzyka);
+            printf("%25.2f",p->zapotrzebowanie_energetyczne);
+            printf("%15s",p->legalnosc ? (p->legalnosc == 1 ? "Szara strefa" : "Nielegalny") : "Legalny");
+            printf("%20d\n",p->id_wlasciciela);
+            p = p->next;
+        }
     }
 }
 
@@ -426,7 +430,7 @@ void sortuj_implanty(implanty* head){
             t=0;
             tmp = head;
             for(implanty* p=head->next;p!=NULL;p = p->next){
-                if(p->id_wlasciciela<=tmp->id_wlasciciela){
+                if(p->id_wlasciciela<tmp->id_wlasciciela){
                     zamiana(p,tmp);
                     t=1;
                 }
@@ -556,4 +560,13 @@ void usuwanie_implantow(implanty** head){
     if(ilosc){
         printf("Usunieto %d rejestrow\n",ilosc);
     }else printf("Nie usunieto zadnych rekordow\n");
+}
+
+void koniec(implanty *head){
+    implanty *tmp;
+    while(head!=NULL){
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
 }

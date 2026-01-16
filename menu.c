@@ -16,14 +16,12 @@ int menu_widok(){
         printf("0. Zakoncz program\n");
         if(scanf("%d",&wybor)!=1){
             while(getchar()!='\n');
-            system("cls");
             printf("Bledny wybor\n");
             continue;
         }
         if(wybor >= 0 && wybor <=9){
             break;
         }
-        system("cls");
         printf("Bledny wybor\n");
     }
     while(getchar()!='\n');

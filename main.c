@@ -5,8 +5,8 @@
 #include "pliki.h"
 
 int main(int argc, char *argv[]){
-    if(argc<3){
-        printf("Prawidlowa skladnia przy odpalaniu programu to:\nProgram.exe <sciezka_do_pliku_wejscia> <sciezka_do_pliku_wyjscia>");
+    if(argc!=3){
+        printf("Prawidlowa skladnia przy odpalaniu programu to:\n./Program.exe <sciezka_do_pliku_wejscia> <sciezka_do_pliku_wyjscia>");
         return 0;
     }
     char *wejscie = argv[1];
@@ -50,5 +50,6 @@ int main(int argc, char *argv[]){
             break;
         }
     }
+    koniec(head);
     return 0;
 }
